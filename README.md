@@ -16,7 +16,7 @@ The main focus is to analyse supplier performance, purchasing behaviour, and inv
 
 
 
-\### Tools Used:
+### Tools Used:
 
 
 
@@ -32,7 +32,7 @@ The main focus is to analyse supplier performance, purchasing behaviour, and inv
 
 
 
-\### Business Problem
+### Business Problem
 
 
 
@@ -60,7 +60,7 @@ This project addresses those challenges by combining purchasing, supplier, deliv
 
 
 
-\### Data Sources
+### Data Sources
 
 
 
@@ -68,7 +68,7 @@ The dataset was synthetically generated in Python to mimic realistic logistics o
 
 
 
-\#### Core Tables
+#### Core Tables
 
 
 
@@ -96,7 +96,7 @@ The dataset was synthetically generated in Python to mimic realistic logistics o
 
 
 
-\### Data Modelling \& Transformations
+### Data Modelling \& Transformations
 
 
 
@@ -116,7 +116,7 @@ The dataset was synthetically generated in Python to mimic realistic logistics o
 
 
 
-2\. SQL Server
+2. SQL Server
 
 
 
@@ -148,7 +148,7 @@ Built enriched views to simplify reporting using:
 
 
 
-3\. Power BI
+3. Power BI
 
 
 
@@ -192,7 +192,7 @@ These KPIs dynamically respond to date, supplier, product, and category filters 
 
 
 
-\### Key Insights
+### Key Insights
 
 
 
@@ -204,7 +204,7 @@ Total spend is relatively well distributed across suppliers, reducing dependency
 
 
 
-2\. Inventory
+2. Inventory
 
 
 
@@ -214,7 +214,7 @@ Frequent inventory fluctuations highlight potential misalignment between purchas
 
 
 
-3\. Supplier Performance
+3. Supplier Performance
 
 
 
@@ -226,7 +226,7 @@ A negative correlation exists between lead time and on-time rate — shorter lea
 
 
 
-4\. Spend Drivers
+4. Spend Drivers
 
 
 
@@ -236,7 +236,7 @@ On the contrary, number of orders is the primary driver of total spend, as evide
 
 
 
-\### Limitations
+### Limitations
 
 
 
@@ -248,7 +248,7 @@ On the contrary, number of orders is the primary driver of total spend, as evide
 
 
 
-\### Next Steps \& Enhancements
+### Next Steps and Enhancements
 
 
 
