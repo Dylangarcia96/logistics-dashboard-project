@@ -1,282 +1,267 @@
-# Logistics Performance Analytics Dashboard
+\# Logistics Performance Analytics Dashboard
 
-# Project Overview
 
-# 
 
-# Purpose:
+\## Project Overview
 
-# Analyse supplier performance, purchasing behaviour, and inventory dynamics to support better procurement and inventory planning decisions.
 
-# 
 
-# Tools Used:
+\### Purpose:
 
-# 
 
-# Python (synthetic data generation)
 
-# 
+This project simulates a real-world logistics environment using synthetic data and demonstrates an end-to-end analytics workflow.
 
-# SQL Server (data modelling, views, stored procedures)
+The main focus is to analyse supplier performance, purchasing behaviour, and inventory dynamics to support better procurement and inventory planning decisions.
 
-# 
 
-# Power BI (data modeling, DAX, visual reports)
 
-# 
+\### Tools Used:
 
-# This project simulates a real-world logistics environment using synthetic data and demonstrates an end-to-end analytics workflow.
 
-# 
 
-# Business Problem
+* Python (synthetic data generation)
 
-# 
 
-# Logistics teams often experience difficulties with:
 
-# 
+* SQL Server (data modelling, views, stored procedures)
 
-# Understanding where spend is concentrated among suppliers
 
-# 
 
-# Evaluating supplier reliability
+* Power BI (data modelling, DAX, visual reports)
 
-# 
 
-# Finding an accurate balance between inventory availability and overstocking
 
-# 
+\### Business Problem
 
-# Identifying drivers of total spend and delays
 
-# 
 
-# This project addresses those challenges by combining purchasing, supplier, delivery, and inventory movement data into a unified analytical model.
+Logistics teams often experience difficulties with:
 
-# 
 
-# Data Sources
 
-# 
+* Understanding where spend is concentrated among suppliers
 
-# The dataset was synthetically generated in Python to mimic realistic logistics operations.
 
-# 
 
-# Core Tables
+* Evaluating supplier reliability
 
-# 
 
-# Suppliers: supplier details, lead time, on-time rate, freight cost
 
-# 
+* Finding an accurate balance between inventory availability and overstocking
 
-# Products: product catalog with category and supplier assignment
 
-# 
 
-# Purchase Orders: order quantities, dates, and total cost
+* Identifying drivers of total spend and delays
 
-# 
 
-# Inventory Movements: IN / OUT movements with signed quantities
 
-# 
+This project addresses those challenges by combining purchasing, supplier, delivery, and inventory movement data into a unified analytical model.
 
-# Delivery Times: expected vs. actual delivery performance
 
-# 
 
-# Date Dimension: calendar table for time intelligence
+\### Data Sources
 
-# 
 
-# Data Modelling \& Transformations
 
-# 
+The dataset was synthetically generated in Python to mimic realistic logistics operations.
 
-# Python
 
-# 
 
-# Generated reproducible synthetic data using numpy, pandas, and faker
+\#### Core Tables
 
-# 
 
-# Implemented opening stock logic to prevent unrealistic negative inventory
 
-# 
+* Suppliers: supplier details, lead time, on-time rate, freight cost
 
-# Simulated delivery delays using probabilistic distributions
 
-# 
 
-# SQL Server
+* Products: product catalogue with category and supplier assignment
 
-# 
 
-# Created a star schema with:
 
-# 
+* Purchase Orders: order quantities, dates, and total cost
 
-# Fact tables: Fact\_Purchase\_Order, Fact\_Inventory
 
-# 
 
-# Dimension tables: Supplier, Product, Category, Date
+* Inventory Movements: IN / OUT movements with signed quantities
 
-# 
 
-# Built enriched views to simplify reporting
 
-# 
+* Delivery Times: expected vs. actual delivery performance
 
-# Used:
 
-# 
 
-# CTEs
+* Date Dimension: calendar table for time intelligence
 
-# 
 
-# Window functions (running inventory balances)
 
-# 
+\### Data Modelling \& Transformations
 
-# Stored procedures for parameterised supplier analysis
 
-# 
 
-# Power BI
+1. Python
 
-# 
 
-# Implemented a clean dimensional model
 
-# 
+* Generated reproducible synthetic data using numpy, pandas, and faker
 
-# Divided the report into a main diagnostic page and successive analytical pages
 
-# 
 
-# Created the following Key KPIs \& Metrics:
+* Implemented opening stock logic to prevent unrealistic negative inventory
 
-# 
 
-# Total Spend
 
-# 
+* Simulated delivery delays using probabilistic distributions
 
-# Average Delay (days)
 
-# 
 
-# Average On-Time Rate
+2\. SQL Server
 
-# 
 
-# Closing Stock Balance
 
-# 
+Created a star schema with:
 
-# Days of Inventory Coverage
 
-# 
 
-# % Days Below Safety Stock
+* Fact tables: Fact\_Purchase\_Order, Fact\_Inventory
 
-# 
 
-# These KPIs dynamically respond to date, supplier, product, and category filters and drill downs from other charts
 
-# 
+* Dimension tables: Supplier, Product, Category, Date
 
-# 🔍 Key Insights
 
-# Spend \& Demand
 
-# 
+Built enriched views to simplify reporting using:
 
-# Total spend is relatively well distributed across suppliers, reducing dependency risk. However, monthly spend shows high variability, indicating opportunities for better demand planning and purchase smoothing.
 
-# 
 
-# Inventory
+* CTEs
 
-# 
 
-# Total inventory coverage exceeds 300 days, suggesting significant overstocking. As a consequence, holding costs increase, as well as warehouse space usage and obsolescence risk.
 
-# Frequent inventory fluctuations highlight potential misalignment between purchasing and consumption.
+* Window functions
 
-# 
 
-# Supplier Performance
 
-# 
+* Stored procedures for parameterised supplier analysis
 
-# Delayed orders are common, though the average delay remains modest (≈ 2–4 days).
 
-# 
 
-# There is no meaningful correlation between freight cost and on-time delivery, suggesting higher freight spend does not guarantee reliability.
+3\. Power BI
 
-# 
 
-# A negative correlation exists between lead time and on-time rate — shorter lead times improve delivery reliability.
 
-# 
+* Implemented a clean dimensional model
 
-# Spend Drivers
 
-# 
 
-# Most suppliers cluster around a similar average order size.
+* Divided the report into a main diagnostic page and successive analytical pages
 
-# 
 
-# Order size alone does not drive total spend.
 
-# 
+* Created the following Key KPIs \& Metrics:
 
-# Number of orders is the primary driver of total spend, as evidenced by larger bubbles corresponding to higher spend.
 
-# 
 
-# Limitations
+* Total Spend
 
-# 
 
-# Data is synthetically generated and does not represent a specific real company.
 
-# 
+* Average Delay (days)
 
-# Inventory movements are simulated and may not reflect operational constraints such as batch sizes or reorder policies.
 
-# 
 
-# Safety stock thresholds are assumed for demonstration purposes.
+* Average On-Time Rate
 
-# 
 
-# Next Steps \& Enhancements
 
-# 
+* Closing Stock Balance
 
-# Introduce reorder point logic and automatic replenishment simulation
 
-# 
 
-# Add forecasting for demand and inventory consumption
+* Days of Inventory Coverage
 
-# 
 
-# Segment suppliers by risk profile (cost vs. reliability trade-off)
 
-# 
+* % Days Below Safety Stock
 
-# Incorporate ABC / XYZ inventory classification
 
+
+These KPIs dynamically respond to date, supplier, product, and category filters and drill downs from other charts
+
+
+
+\### Key Insights
+
+
+
+1. Spend and Demand
+
+
+
+Total spend is relatively well distributed across suppliers, reducing dependency risk. However, monthly spend shows high variability, indicating opportunities for better demand planning and purchase smoothing.
+
+
+
+2\. Inventory
+
+
+
+Total inventory coverage exceeds 300 days, suggesting significant overstocking. As a consequence, holding costs increase, as well as warehouse space usage and obsolescence risk.
+
+Frequent inventory fluctuations highlight potential misalignment between purchasing and consumption.
+
+
+
+3\. Supplier Performance
+
+
+
+Delayed orders are common, though the average delay remains modest (≈ 2–4 days).
+
+There is no meaningful correlation between freight cost and on-time delivery, suggesting higher freight spend does not guarantee reliability.
+
+A negative correlation exists between lead time and on-time rate — shorter lead times improve delivery reliability.
+
+
+
+4\. Spend Drivers
+
+
+
+Most suppliers cluster around a similar average order size. However, order size alone does not drive total spend.
+
+On the contrary, number of orders is the primary driver of total spend, as evidenced by larger bubbles corresponding to higher spend.
+
+
+
+\### Limitations
+
+
+
+1. Data is synthetically generated and does not represent a specific real company.
+   
+2. Inventory movements are simulated and may not reflect operational constraints such as batch sizes or reorder policies.
+   
+3. Safety stock thresholds are assumed for demonstration purposes.
+
+
+
+\### Next Steps \& Enhancements
+
+
+
+* Introduce reorder point logic and automatic replenishment simulation
+
+
+
+* Add forecasting for demand and inventory consumption
+
+
+
+* Segment suppliers by risk profile (cost vs. reliability trade-off)
+
+
+
+* Incorporate ABC / XYZ inventory classification
