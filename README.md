@@ -132,20 +132,7 @@ Created a star schema with:
 
 
 
-Built enriched views to simplify reporting using:
-
-
-
-	* CTEs
-
-
-
-	* Window functions
-
-
-
-	* Stored procedures for parameterised supplier analysis
-
+Built enriched views to simplify reporting using CTEs, Window Functions and Stored procedures for parameterised analyses.
 
 
 3. Power BI
