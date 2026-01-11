@@ -187,7 +187,7 @@ These KPIs dynamically respond to date, supplier, product, and category filters 
 
 
 
-	Total spend is relatively well distributed across suppliers, reducing dependency risk. However, monthly spend shows high variability, indicating opportunities 	for better demand planning and purchase smoothing.
+Total spend is relatively well distributed across suppliers, reducing dependency risk. However, monthly spend shows high variability, indicating opportunities 	for better demand planning and purchase smoothing.
 
 
 
@@ -195,9 +195,9 @@ These KPIs dynamically respond to date, supplier, product, and category filters 
 
 
 
-	Total inventory coverage exceeds 300 days, suggesting significant overstocking. As a consequence, holding costs increase, as well as warehouse space usage and 	obsolescence risk.
+Total inventory coverage exceeds 300 days, suggesting significant overstocking. As a consequence, holding costs increase, as well as warehouse space usage and obsolescence risk.
 
-	Frequent inventory fluctuations highlight potential misalignment between purchasing and consumption.
+Frequent inventory fluctuations highlight potential misalignment between purchasing and consumption.
 
 
 
@@ -205,11 +205,11 @@ These KPIs dynamically respond to date, supplier, product, and category filters 
 
 
 
-	Delayed orders are common, though the average delay remains modest (≈ 2–4 days).
+Delayed orders are common, though the average delay remains modest (≈ 2–4 days).
 
-	There is no meaningful correlation between freight cost and on-time delivery, suggesting higher freight spend does not guarantee reliability.
+There is no meaningful correlation between freight cost and on-time delivery, suggesting higher freight spend does not guarantee reliability.
 
-	A negative correlation exists between lead time and on-time rate — shorter lead times improve delivery reliability.
+A negative correlation exists between lead time and on-time rate — shorter lead times improve delivery reliability.
 
 
 
@@ -217,9 +217,9 @@ These KPIs dynamically respond to date, supplier, product, and category filters 
 
 
 
-	Most suppliers cluster around a similar average order size. However, order size alone does not drive total spend.
+Most suppliers cluster around a similar average order size. However, order size alone does not drive total spend.
 
-	On the contrary, number of orders is the primary driver of total spend, as evidenced by larger bubbles corresponding to higher spend.
+On the contrary, number of orders is the primary driver of total spend, as evidenced by larger bubbles corresponding to higher spend.
 
 
 
