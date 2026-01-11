@@ -164,27 +164,27 @@ Built enriched views to simplify reporting using:
 
 
 
-* Total Spend
+	* Total Spend
 
 
 
-* Average Delay (days)
+	* Average Delay (days)
 
 
 
-* Average On-Time Rate
+	* Average On-Time Rate
 
 
 
-* Closing Stock Balance
+	* Closing Stock Balance
 
 
 
-* Days of Inventory Coverage
+	* Days of Inventory Coverage
 
 
 
-* % Days Below Safety Stock
+	* % Days Below Safety Stock
 
 
 
