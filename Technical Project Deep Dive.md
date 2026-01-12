@@ -10,354 +10,191 @@ This document provides a technical walkthrough of the end-to-end analytics pipel
 
 The goal was to simulate a realistic logistics environment and demonstrate best practices in data engineering, analytics modelling, and insight generation.
 
-2. Data Generation (Python)
-   2.1 Objective
+## 2. Data Generation in Python
+   ### 2.1 Objective
 
 With a view to making a unique, creative project, all datasets were synthetically generated while preserving realistic logistics behaviour, particularly when it comes to:
 
-* Supplier lead times and reliability;
-* Purchase volume variability;
-* Inventory inflows and outflows;
-* Delivery delays.
+- Supplier lead times and reliability;
+- Purchase volume variability;
+- Inventory inflows and outflows;
+- Delivery delays.
 
-2.2 Tools and Libraries
+   ### 2.2 Tools and Libraries
 
-* pandas – data structures and export
-* numpy – random distributions
-* faker – realistic entity names
-* random – controlled randomness
+- pandas – data structures and export
+- numpy – random distributions
+- faker – realistic entity names
+- random – controlled randomness
 
 A fixed random seed (42) was used to ensure reproducibility.
 
 
 
-\# Import libraries
-
+```python
+# Import libraries
 import pandas as pd
-
 import numpy as np
-
 from faker import Faker
-
 import random
-
-
 
 fake = Faker()
 
-
-
-\# Set random seed for reproducibility
-
+# Set random seed for reproducibility
 np.random.seed(42)
-
 random.seed(42)
 
+# Generate synthetic data tables
 
+# 1. SUPPLIERS
 
-\# Generate synthetic data tables
+num_suppliers = 20
+suppliers = []
 
+for i in range(1, num_suppliers + 1):
+    suppliers.append({
+        "supplier_id": i,
+        "supplier_name": fake.company(),
+        "country": fake.country(),
+        "lead_time_days": np.random.randint(5, 30),
+        "on_time_rate": round(np.random.uniform(0.7, 0.99), 2),
+        "freight_cost": np.random.randint(200, 3000)
+    })
 
+df_suppliers = pd.DataFrame(suppliers)
+df_suppliers.to_csv("suppliers.csv", index=False)
 
-\# 1. SUPPLIERS
 
+# 2. PRODUCTS
 
+num_products = 80
+products = []
 
-num\_suppliers = 20
+for i in range(1, num_products + 1):
+    products.append({
+        "product_id": i,
+        "product_name": fake.word().capitalize() + " " + fake.word().capitalize(),
+        "category": random.choice(["Electronics", "Furniture", "Office Supplies", "Food", "Hardware"]),
+        "unit_cost": round(np.random.uniform(2, 250), 2),
+        "supplier_id": np.random.randint(1, num_suppliers + 1)
+    })
 
-suppliers = \[]
+df_products = pd.DataFrame(products)
+df_products.to_csv("products.csv", index=False)
 
 
+# 3. PURCHASE ORDERS
 
-for i in range(1, num\_suppliers + 1):
-
-&nbsp;   suppliers.append({
-
-&nbsp;       "supplier\_id": i,
-
-&nbsp;       "supplier\_name": fake.company(),
-
-&nbsp;       "country": fake.country(),
-
-&nbsp;       "lead\_time\_days": np.random.randint(5, 30),
-
-&nbsp;       "on\_time\_rate": round(np.random.uniform(0.7, 0.99), 2),
-
-&nbsp;       "freight\_cost": np.random.randint(200, 3000)
-
-&nbsp;   })
-
-
-
-df\_suppliers = pd.DataFrame(suppliers)
-
-df\_suppliers.to\_csv("suppliers.csv", index=False)
-
-
-
-
-
-\# 2. PRODUCTS
-
-
-
-num\_products = 80
-
-products = \[]
-
-
-
-for i in range(1, num\_products + 1):
-
-&nbsp;   products.append({
-
-&nbsp;       "product\_id": i,
-
-&nbsp;       "product\_name": fake.word().capitalize() + " " + fake.word().capitalize(),
-
-&nbsp;       "category": random.choice(\["Electronics", "Furniture", "Office Supplies", "Food", "Hardware"]),
-
-&nbsp;       "unit\_cost": round(np.random.uniform(2, 250), 2),
-
-&nbsp;       "supplier\_id": np.random.randint(1, num\_suppliers + 1)
-
-&nbsp;   })
-
-
-
-df\_products = pd.DataFrame(products)
-
-df\_products.to\_csv("products.csv", index=False)
-
-
-
-
-
-\# 3. PURCHASE ORDERS
-
-
-
-num\_orders = 500
-
-purchase\_orders = \[]
-
-
-
-for i in range(1, num\_orders + 1):
-
-&nbsp;   order\_date = fake.date\_between(start\_date="-1y", end\_date="today")
-
-&nbsp;   qty = np.random.randint(10, 300)
-
-&nbsp;   
-
-&nbsp;   purchase\_orders.append({
-
-&nbsp;       "order\_id": i,
-
-&nbsp;       "product\_id": np.random.randint(1, num\_products + 1),
-
-&nbsp;       "order\_date": order\_date,
-
-&nbsp;       "quantity\_ordered": qty,
-
-&nbsp;       "total\_cost": round(qty \* np.random.uniform(5, 150), 2)
-
-&nbsp;   })
-
-
-
-df\_po = pd.DataFrame(purchase\_orders)
-
-df\_po.to\_csv("purchase\_orders.csv", index=False)
-
-
-
-
-
-\# 4. INVENTORY MOVEMENTS
-
-
-
-num\_products = 80
-
-num\_movements\_per\_product = 18
-
-opening\_stock = 500
-
-
-
-inventory\_movements = \[]
-
-movement\_id = 1
-
-
-
-for product\_id in range(1, num\_products + 1):
-
-
-
-&nbsp;   # OPENING BALANCE
-
-&nbsp;   start\_date = fake.date\_between(start\_date="-1y", end\_date="-11m")
-
-
-
-&nbsp;   inventory\_movements.append({
-
-&nbsp;       "movement\_id": movement\_id,
-
-&nbsp;       "product\_id": product\_id,
-
-&nbsp;       "movement\_type": "OPENING",
-
-&nbsp;       "quantity": opening\_stock,
-
-&nbsp;       "movement\_date": start\_date
-
-&nbsp;   })
-
-&nbsp;   movement\_id += 1
-
-
-
-&nbsp;   current\_stock = opening\_stock
-
-
-
-&nbsp;   # FUTURE MOVEMENTS
-
-&nbsp;   movement\_dates = sorted(
-
-&nbsp;       fake.date\_between(start\_date=start\_date, end\_date="today")
-
-&nbsp;       for \_ in range(num\_movements\_per\_product)
-
-&nbsp;   )
-
-
-
-&nbsp;   for movement\_date in movement\_dates:
-
-
-
-&nbsp;       movement\_type = random.choice(\["IN", "OUT"])
-
-
-
-&nbsp;       if movement\_type == "IN":
-
-&nbsp;           qty = np.random.randint(20, 150)
-
-&nbsp;           current\_stock += qty
-
-
-
-&nbsp;       else:  # OUT
-
-&nbsp;           max\_out = min(120, current\_stock)
-
-&nbsp;           if max\_out <= 0:
-
-&nbsp;               continue
-
-
-
-&nbsp;           qty = np.random.randint(1, max\_out + 1)
-
-&nbsp;           current\_stock -= qty
-
-
-
-&nbsp;       inventory\_movements.append({
-
-&nbsp;           "movement\_id": movement\_id,
-
-&nbsp;           "product\_id": product\_id,
-
-&nbsp;           "movement\_type": movement\_type,
-
-&nbsp;           "quantity": qty,
-
-&nbsp;           "movement\_date": movement\_date
-
-&nbsp;       })
-
-&nbsp;       movement\_id += 1
-
-
-
-dfinv = pd.DataFrame(inventory\_movements)
-
-dfinv.to\_csv("inventory\_movements.csv", index=False)
-
-
-
-
-
-\# 5. DELIVERY TIMES
-
-
-
-delivery\_times = \[]
-
-
-
-df\_po\_merged = df\_po.merge(df\_products\[\["product\_id", "supplier\_id"]], on="product\_id", how="left")
-
-
-
-for idx, row in df\_po\_merged.iterrows():
-
-&nbsp;   supplier\_id = row\["supplier\_id"]
-
-&nbsp;   
-
-&nbsp;   expected\_lt = int(df\_suppliers.loc\[df\_suppliers\["supplier\_id"] == supplier\_id, "lead\_time\_days"].values\[0])
-
-&nbsp;   
-
-&nbsp;   actual\_lt = max(1, int(np.random.normal(expected\_lt, 3)))
-
-&nbsp;   
-
-&nbsp;   delivery\_date = pd.to\_datetime(row\["order\_date"]) + pd.Timedelta(days=actual\_lt)
-
-&nbsp;   
-
-&nbsp;   delivery\_times.append({
-
-&nbsp;       "order\_id": row\["order\_id"],
-
-&nbsp;       "product\_id": row\["product\_id"],
-
-&nbsp;       "supplier\_id": supplier\_id,
-
-&nbsp;       "order\_date": row\["order\_date"],
-
-&nbsp;       "expected\_lead\_time\_days": expected\_lt,
-
-&nbsp;       "actual\_lead\_time\_days": actual\_lt,
-
-&nbsp;       "delay\_days": actual\_lt - expected\_lt,
-
-&nbsp;       "expected\_delivery\_date": pd.to\_datetime(row\["order\_date"]) + pd.Timedelta(days=expected\_lt),
-
-&nbsp;       "actual\_delivery\_date": delivery\_date
-
-&nbsp;   })
-
-
-
-df\_deliveries = pd.DataFrame(delivery\_times)
-
-df\_deliveries.to\_csv("delivery\_times.csv", index=False)
-
-
+num_orders = 500
+purchase_orders = []
+
+for i in range(1, num_orders + 1):
+    order_date = fake.date_between(start_date="-1y", end_date="today")
+    qty = np.random.randint(10, 300)
+    
+    purchase_orders.append({
+        "order_id": i,
+        "product_id": np.random.randint(1, num_products + 1),
+        "order_date": order_date,
+        "quantity_ordered": qty,
+        "total_cost": round(qty * np.random.uniform(5, 150), 2)
+    })
+
+df_po = pd.DataFrame(purchase_orders)
+df_po.to_csv("purchase_orders.csv", index=False)
+
+
+# 4. INVENTORY MOVEMENTS
+
+num_products = 80
+num_movements_per_product = 18
+opening_stock = 500
+
+inventory_movements = []
+movement_id = 1
+
+for product_id in range(1, num_products + 1):
+
+    # OPENING BALANCE
+    start_date = fake.date_between(start_date="-1y", end_date="-11m")
+
+    inventory_movements.append({
+        "movement_id": movement_id,
+        "product_id": product_id,
+        "movement_type": "OPENING",
+        "quantity": opening_stock,
+        "movement_date": start_date
+    })
+    movement_id += 1
+
+    current_stock = opening_stock
+
+    # FUTURE MOVEMENTS
+    movement_dates = sorted(
+        fake.date_between(start_date=start_date, end_date="today")
+        for _ in range(num_movements_per_product)
+    )
+
+    for movement_date in movement_dates:
+
+        movement_type = random.choice(["IN", "OUT"])
+
+        if movement_type == "IN":
+            qty = np.random.randint(20, 150)
+            current_stock += qty
+
+        else:  # OUT
+            max_out = min(120, current_stock)
+            if max_out <= 0:
+                continue
+
+            qty = np.random.randint(1, max_out + 1)
+            current_stock -= qty
+
+        inventory_movements.append({
+            "movement_id": movement_id,
+            "product_id": product_id,
+            "movement_type": movement_type,
+            "quantity": qty,
+            "movement_date": movement_date
+        })
+        movement_id += 1
+
+dfinv = pd.DataFrame(inventory_movements)
+dfinv.to_csv("inventory_movements.csv", index=False)
+
+
+# 5. DELIVERY TIMES
+
+delivery_times = []
+
+df_po_merged = df_po.merge(df_products[["product_id", "supplier_id"]], on="product_id", how="left")
+
+for idx, row in df_po_merged.iterrows():
+    supplier_id = row["supplier_id"]
+    
+    expected_lt = int(df_suppliers.loc[df_suppliers["supplier_id"] == supplier_id, "lead_time_days"].values[0])
+    
+    actual_lt = max(1, int(np.random.normal(expected_lt, 3)))
+    
+    delivery_date = pd.to_datetime(row["order_date"]) + pd.Timedelta(days=actual_lt)
+    
+    delivery_times.append({
+        "order_id": row["order_id"],
+        "product_id": row["product_id"],
+        "supplier_id": supplier_id,
+        "order_date": row["order_date"],
+        "expected_lead_time_days": expected_lt,
+        "actual_lead_time_days": actual_lt,
+        "delay_days": actual_lt - expected_lt,
+        "expected_delivery_date": pd.to_datetime(row["order_date"]) + pd.Timedelta(days=expected_lt),
+        "actual_delivery_date": delivery_date
+    })
+
+df_deliveries = pd.DataFrame(delivery_times)
+df_deliveries.to_csv("delivery_times.csv", index=False)
 
 print("Synthetic supply-chain dataset created successfully!")
-
-
 
 2.3 Core Tables Generated
 Suppliers
