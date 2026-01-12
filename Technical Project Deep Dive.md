@@ -11,7 +11,7 @@ This document provides a technical walkthrough of the end-to-end analytics pipel
 The goal was to simulate a realistic logistics environment and demonstrate best practices in data engineering, analytics modelling, and insight generation.
 
 ## 2. Data Generation in Python
-   ### 2.1 Objective
+### 2.1 Objective
 
 With a view to making a unique, creative project, all datasets were synthetically generated while preserving realistic logistics behaviour, particularly when it comes to:
 
@@ -20,7 +20,7 @@ With a view to making a unique, creative project, all datasets were syntheticall
 - Inventory inflows and outflows;
 - Delivery delays.
 
-   ### 2.2 Tools and Libraries
+### 2.2 Tools and Libraries
 
 - pandas – data structures and export
 - numpy – random distributions
@@ -196,7 +196,9 @@ df_deliveries.to_csv("delivery_times.csv", index=False)
 
 print("Synthetic supply-chain dataset created successfully!")
 
-2.3 Core Tables Generated
+```
+
+### 2.3 Core Tables Generated
 Suppliers
 
 Each supplier includes:
