@@ -197,6 +197,11 @@ df_deliveries.to_csv("delivery_times.csv", index=False)
 print("Synthetic supply-chain dataset created successfully!")
 
 ```
+Output:
+
+``` python
+Synthetic supply-chain dataset created successfully!
+```
 
 ### 2.3 Core Tables Generated
 #### Suppliers (20 rows - 20 suppliers)
@@ -263,6 +268,8 @@ This table includes the following columns:
 - Actual Delivery Date
 
 ### 2.4 EDA in Python
+
+The datasets were explored to understand data types, distribution, and potential quality issues.
 
 ```python
 
