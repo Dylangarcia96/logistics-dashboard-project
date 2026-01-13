@@ -320,13 +320,13 @@ dfprod.to_csv("products.csv", index=False)
 ```
 
 #### Product Categories (5 rows - 5 categories)
-After performing EDA on my tables, I realised that normalise the products table was going to be helpful in creating a star schema in Power BI. For that reason, I created the product category table so as to avoid overloading the products table with repeated rows of category names.
+After performing EDA on my tables, I realised that normalising the products table was going to be helpful in creating a star schema in Power BI. For that reason, I created the product category table so as to avoid overloading the products table with repeated rows of category names.
 
 ### Conclusions on EDA
 
 We can observe that the synthetically generated tables were created successfully. Thanks to observatory functions like df.info, df.head, df.describe, etc. we could determine that there is no missing data, there are not outliers and there are not duplicated values.
 
-## 3. SQL Server Modeling
+## 3. SQL Server Modelling
 ### 3.1 Database Design
 
 All tables were loaded into a SQL Server database named Logistics.
@@ -454,7 +454,7 @@ END
 
 ### Conclusions on SQL
 
-2 views and 2 stored procedures were successfully created by using different techniques, such as Common Table Expressions (CTEs), Window functions (running totals), conditional logic, aggregations and grouping, and parameterised procedures
+2 views and 2 stored procedures were successfully created by using different techniques, such as Common Table Expressions (CTEs), Window functions (running totals), conditional logic, aggregations and grouping, and parameterised procedures.
 This demonstrates my knowledge when it comes to reusable SQL logic, while at the same time, a backend analytics capability beyond Power BI.
 
 ## 4. Power BI Data Model
