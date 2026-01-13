@@ -457,7 +457,23 @@ END
 2 views and 2 stored procedures were successfully created by using different techniques, such as Common Table Expressions (CTEs), Window functions (running totals), conditional logic, aggregations and grouping, and parameterised procedures.
 This demonstrates my knowledge when it comes to reusable SQL logic, while at the same time, a backend analytics capability beyond Power BI.
 
-## 4. Power BI Data Model
+## 4. Power BI analytics and reporting
+
+### ETL on Power BI
+
+Firstly, I created a connection between Power BI and Microsoft SQL Server in order to import the tables into Power BI. I decided to import them rather than using Direct Query due to the small size of the tables and the fact that we do not require live data updates.
+
+Secondly, I opened up Power Query to transform my tables and make sure they are clean and correct in order to avoid inconsistencies further ahead.
+The following transformations took place:
+
+- Rename the tables and group them as fact tables and dimension tables, as seen below:
+
+![alt text](image.png)
+
+
+
+
+
 ### 4.1 Model Structure
 
 Power BI uses a clean star schema mirroring the SQL model.
