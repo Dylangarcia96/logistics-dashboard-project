@@ -6,8 +6,6 @@ GO;
 CREATE OR ALTER VIEW vw_purchase_orders_enriched AS
 	SELECT po.order_id,
 		po.product_id,
-		pr.category_id,
-		pr.supplier_id,
 		po.order_date,
 		po.quantity_ordered,
 		po.total_cost,
@@ -29,8 +27,6 @@ CREATE OR ALTER VIEW vw_purchase_orders_enriched AS
 CREATE OR ALTER VIEW vw_inventory_enriched AS
 	SELECT i.movement_id,
 		i.product_id,
-		p.supplier_id,
-		p.category_id,
 		i.movement_date,
 		CASE WHEN i.movement_type = 'IN' THEN quantity
 		WHEN i.movement_type = 'OPENING' THEN quantity
