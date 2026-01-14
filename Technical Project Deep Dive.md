@@ -637,7 +637,7 @@ SWITCH(
 
 - **Correlation analysis**: Its main function is to study the relationship between different variables. *On-time rate vs. freight cost* and *on-time rate vs. lead time* correlations allows for patterns discoveries. Further down on the page, there is a bubble chart showing one bubble per supplier, and their positions depending on the average order size and the total spend. Their size is determined by the number of orders, a visual cue designed to easily identify drivers for total spend.
 
-![alt text](Correlation_Analysis.png)
+![alt text](image.png)
 
 ### 6.2 Visual Techniques
 
