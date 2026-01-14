@@ -496,34 +496,61 @@ It supports time intelligence, monthly and yearly aggregations, slicers and tren
 
 ### 4.1 Model Structure
 
-Power BI uses a clean star schema mirroring the SQL model. The fact tables have been connected to the shared dimensions using single-direction filtering; and all time intelligence analysis is driven by the date dimension table. Key columns have been identified as such; and the date table have been marked as such to override any automatic hierarchical dates in Power BI.
+The data model follows a star-schema design with two fact tables (purchase orders and inventory movements) connected to shared dimensions (date, product, supplier, and category). Inventory is modelled at the movement level and stock levels are calculated dynamically using cumulative DAX measures. This approach reflects real-world ERP systems and enables flexible time-based inventory analysis. Key columns have been identified as such; and the date table have been marked as such to override any automatic hierarchical dates in Power BI.
 
-![alt text](Data_model.png)
+![alt text](image.png)
 
-5. DAX Measures \& KPIs
-   5.1 Inventory Logic
+### 5. DAX Measures and KPIs
+   ## 5.1 Inventory Logic
 
-Because inventory quantities are signed:
+- Closing stock balance: Returns inventory as of the selected date context.
+Since the column quantities in the fact inventory table is signed, then SUM(quantity) = net movement. However, running balances have been calculated via date-aware measures so that the KPI will vary when different filters are selected.
 
-SUM(quantity) = net movement
+```DAX
+Closing Stock Balance = 
+VAR AxisDate =
+    MAX(Dim_Date[Date])
 
-Running balances are calculated via date-aware measures
+VAR MinSlicerDate =
+    MINX(ALLSELECTED(Dim_Date), Dim_Date[Date])
 
-Closing Stock Balance
+VAR MaxSlicerDate =
+    MAXX(ALLSELECTED(Dim_Date), Dim_Date[Date])
 
-Returns inventory as of the selected date context.
+RETURN
+IF(
+    AxisDate < MinSlicerDate
+        || AxisDate > MaxSlicerDate,
+    BLANK(),
+    CALCULATE(
+        SUM(Fact_Inventory[quantity]),
+        FILTER(
+            ALLSELECTED(Dim_Date),
+            Dim_Date[Date] <= AxisDate
+        )
+    )
+)
+```
 
-Average Daily OUT Movements
+- Average Daily OUT: Calculates average daily consumption using date-aware iteration, taking only negative quantities (OUT)
 
-Calculates average daily consumption using:
+```DAX
+AverageDailyOut = AVERAGEX(
+    FILTER(
+        VALUES(Dim_Date[Date]), 
+        [TotalOut] > 0), [TotalOut])
+```
 
-Date-aware iteration
+- Days of Inventory Coverage: Indicates how long current stock would last at current consumption rates.
 
-Only negative quantities (OUT)
+```DAX
+Days Of Inventory Coverage = 
+VAR DailyOut = CALCULATE(SUM(Fact_Inventory[quantity]), Fact_Inventory[quantity] < 0) * -1
 
-Days of Inventory Coverage
+VAR AverageDailyOut = AVERAGEX(FILTER(VALUES(Dim_Date[Date]), [TotalOut] > 0), [TotalOut])
 
-Indicates how long current stock would last at current consumption rates.
+RETURN DIVIDE([Closing Stock Balance], AverageDailyOut)
+```
 
 5.2 Performance KPIs
 
