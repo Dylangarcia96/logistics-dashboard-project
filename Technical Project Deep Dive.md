@@ -467,7 +467,7 @@ Secondly, I opened up Power Query to transform my tables and made sure they are 
 
 - Rename tables, unable load of unnecessary tables, and group them as fact tables and dimension tables, as seen below:
 
-![alt text](image.png)
+![alt text](Queries.png)
 
 - Dropping duplicates on my keys to assure a correct relationship between the tables.
 ```DAX
@@ -498,7 +498,7 @@ It supports time intelligence, monthly and yearly aggregations, slicers and tren
 
 Power BI uses a clean star schema mirroring the SQL model. The fact tables have been connected to the shared dimensions using single-direction filtering; and all time intelligence analysis is driven by the date dimension table. Key columns have been identified as such; and the date table have been marked as such to override any automatic hierarchical dates in Power BI.
 
-![alt text](image-1.png)
+![alt text](Data_model.png)
 
 5. DAX Measures \& KPIs
    5.1 Inventory Logic
