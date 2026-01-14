@@ -582,16 +582,24 @@ CALCULATE(
 Average On Time Rate = AVERAGE(Dim_Supplier[on_time_rate])
 ```
 
+All KPIs and measures created respond well to drill down and filters.
+
 ## 6. Visual Design \& Interactivity
-   6.1 Dashboard Structure
+   ### 6.1 Report structure
 
 The report is split into logical sections:
 
-Main dashboard – operational overview
+- Main dashboard: an operational overview of the logistics department, allowing tracking of purchase costs, supplier performance, inventory snapshots and expenses trends.
 
-Supplier analysis – performance trade-offs
+![alt text](Logistics_Dashboard.png)
+
+- Supplier analysis – performance trade-offs
+
+![alt text](Supplier_Analysis.png)
 
 Correlation analysis – relationship exploration
+
+![alt text](Correlation_Analysis.png)
 
 6.2 Visual Techniques Used
 
