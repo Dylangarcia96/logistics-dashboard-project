@@ -498,7 +498,7 @@ It supports time intelligence, monthly and yearly aggregations, slicers and tren
 
 The data model follows a star-schema design with two fact tables (purchase orders and inventory movements) connected to shared dimensions (date, product, supplier, and category). Inventory is modelled at the movement level and stock levels are calculated dynamically using cumulative DAX measures. This approach reflects real-world ERP systems and enables flexible time-based inventory analysis. Key columns have been identified as such; and the date table have been marked as such to override any automatic hierarchical dates in Power BI.
 
-![alt text](image.png)
+![alt text](Data_model.png)
 
 ### 5. DAX Measures and KPIs
    ## 5.1 Inventory Logic
